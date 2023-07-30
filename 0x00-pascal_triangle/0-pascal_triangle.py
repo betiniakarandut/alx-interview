@@ -19,6 +19,6 @@ def pascal_triangle(n):
     for x in range(max(n,0)):
         print(trow)
         trow=[l+r for l,r in zip(trow+y, y+trow)]
-    return n>=1
+    return n
 
 pascal_triangle(10)
