@@ -1,24 +1,44 @@
 #!/usr/bin/python3
-"""Module for Pascal triangle""" 
+'''
+Pascal triangle function
+'''
 
 
 def pascal_triangle(n):
-    """function to represent Pascal triangle
-
-    Args:
-        int(n)
-
-    Returns:
-        list representing pascal triangle
-    """
-
+    '''
+    Returns a list of lists representing the pascal triangle of n
+    '''
+    # If n is less than 0 return an empty list
     if n <= 0:
         return []
-    trow = [1]
-    y = [0]
-    for x in range(max(n,0)):
-        print(trow)
-        trow=[l+r for l,r in zip(trow+y, y+trow)]
-    return n
 
-pascal_triangle(10)
+    # The first list will always be 1
+    res = [[1]]
+
+    for i in range(n - 1):
+        # Add 0 at the start and the end of a temp list
+        temp = [0] + res[-1] + [0]
+
+        # Create list for storing the new values
+        row = []
+
+        # Loop through the new number of elements adding the two top
+        for j in range(len(res[-1]) + 1):
+            row.append(temp[j] + temp[j + 1])
+
+        # Append the list to the results list
+        res.append(row)
+
+    return res
+
+
+"""
+def print_triangle(triangle):
+    # Print the triangle
+    for row in triangle:
+        print("[{}]".format(",".join([str(x) for x in row])))
+
+
+if __name__ == "__main__":
+    print_triangle(pascal_triangle(5))
+"""
