@@ -20,4 +20,5 @@ def pascal_triangle(n):
         print(trow)
         trow=[l+r for l,r in zip(trow+y, y+trow)]
     return n>=1
-# pascal_triangle(5)
+
+pascal_triangle(10)
