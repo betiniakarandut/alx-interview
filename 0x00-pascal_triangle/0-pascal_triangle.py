@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Module for Pascal triangle""" 
+'''
+Module for Pascal triangle
+'''
 
 
 def pascal_triangle(n):
@@ -11,14 +13,19 @@ def pascal_triangle(n):
     Returns:
         list representing pascal triangle
     """
-
     if n <= 0:
         return []
-    trow = [1]
-    y = [0]
-    for x in range(max(n,0)):
-        print(trow)
-        trow=[l+r for l,r in zip(trow+y, y+trow)]
-    return n>=1
 
-pascal_triangle(10)
+    result = [[1]]
+
+    for i in range(n - 1):
+        temp = [0] + result[-1] + [0]
+
+        row = []
+
+        for j in range(len(result[-1]) + 1):
+            row.append(temp[j] + temp[j + 1])
+
+        result.append(row)
+
+    return result
