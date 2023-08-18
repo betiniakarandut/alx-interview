@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """
-A script for parsing HTTP request logs.
+A module for parsing HTTP request logs.
 """
 import re
+
 
 class LogParser:
     def __init__(self):
@@ -35,7 +36,7 @@ class LogParser:
 
     def print_statistics(self):
         """
-        Prints the accumulated statistics of the HTTP request log
+        Prints the build-up statistics of the HTTP request log
         """
         print("File size: {:d}".format(self.total_file_size), flush=True)
         for status_code, num in sorted(self.status_codes_stats.items()):
@@ -46,7 +47,7 @@ class LogParser:
         """
         Updates the metrics from a given HTTP request log
         Args:
-            line (str): The line of input from which to retrieve the metrics
+            line (str): Keyboard input from which to retrieve the metrics
         """
         line_info = self.extract_input(line)
         status_code = line_info.get("status_code", "0")
@@ -56,7 +57,7 @@ class LogParser:
 
     def run(self):
         """
-        Starting the log parser
+        Testing the log parser
         """
         line_num = 0
         try:
@@ -69,7 +70,7 @@ class LogParser:
         except (KeyboardInterrupt, EOFError):
             self.print_statistics()
 
+
 if __name__ == "__main__":
     parser = LogParser()
     parser.run()
-
