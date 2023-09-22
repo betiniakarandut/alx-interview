@@ -8,15 +8,15 @@ fewest number of coins needed
 
 def makeChange(coins, total):
     """
-    Fewest number of coins needed to meet total.
+    Determine the fewest number of coins needed to make a given amount (total).
 
     Args:
-        coins(list[int]) - coin value
-        total(int) - Target amount 
+        coins(list[int]) - List of coin values
+        total(int) - Target amount
 
     Returns:
-        fewest number of coins
-        return -1, If not possible to make the total with the given coins
+        The minimum number of coins needed to make the total.
+        If it's not possible to make the total with the given coins, return -1.
     """
     if total <= 0:
         return 0
@@ -24,10 +24,9 @@ def makeChange(coins, total):
     if not coins:
         return -1
 
-    # The value of a coin will always be an integer greater than 0
     """
-    Bring all coins that are greater than 0
-    and less then or equal to total
+    Gather all coins that are greater than 0
+    and 'less then or equal to `total`'
     """
     if len(coins) != 0:
         new_coins = [i for i in coins if ((i > 0) and (i <= total))]
@@ -37,6 +36,7 @@ def makeChange(coins, total):
     dp[0] = 0
 
     for coin in new_coins:
+
         for i in range(coin, total + 1):
             dp[i] = min(dp[i], dp[i - coin] + 1)
 
@@ -44,3 +44,9 @@ def makeChange(coins, total):
         return -1
 
     return dp[total]
+
+
+if __name__ == "__main__":
+    print(makeChange([1, 2, 25], 37))
+
+    print(makeChange([1256, 54, 48, 16, 102], 1453))
