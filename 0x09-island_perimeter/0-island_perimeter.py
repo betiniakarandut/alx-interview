@@ -1,13 +1,13 @@
-#!/usr/bin/env python3
+##!/usr/bin/python3
 """Module for 0-island_perimeter.py"""
 
 
 def island_perimeter(grid):
     """Calculate the perimeter of an island in grid
-    
+
     Arg:
         grid(list[int])
-    
+
     returns:
         perimeter of island
     """
@@ -24,5 +24,6 @@ def island_perimeter(grid):
                 if i > 0 and grid[i - 1][j] == 1:
                     perimeter -= 2
                 if j > 0 and grid[i][j - 1] == 1:
-                    perimeter -= 2 # subtract 2 from shared edge(i.e neighbors)
+                    # subtract 2 from shared edge(i.e neighbors)
+                    perimeter -= 2
     return perimeter
