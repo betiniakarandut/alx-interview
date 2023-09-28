@@ -1,4 +1,4 @@
-##!/usr/bin/python3
+#!/usr/bin/python3
 """Module for 0-island_perimeter.py"""
 
 
@@ -27,3 +27,14 @@ def island_perimeter(grid):
                     # subtract 2 from shared edge(i.e neighbors)
                     perimeter -= 2
     return perimeter
+
+
+if __name__ == "__main__":
+    grid = [
+        [0, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0],
+        [0, 1, 1, 1, 0, 0],
+        [0, 0, 0, 0, 0, 0]
+    ]
+    print(island_perimeter(grid))
