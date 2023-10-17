@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module for 0-prime_game.py"""
+"""Module for prime game"""
 
 
 def isWinner(x, nums):
@@ -12,47 +12,19 @@ def isWinner(x, nums):
     Returns:
         name of winner[str]
     """
-    def is_prime(num):
-        if num <= 1:
-            return False
-        for i in range(2, int(num**0.5) + 1):
-            if num % i == 0:
-                return False
-        return True
-
-    # Initialize a list to store the results for each n
-    results = [None] * (max(nums) + 1)
-
-    def canWin(n):
-        if n == 1:
-            return False
-
-        if results[n] is not None:
-            return results[n]
-
-        for i in range(2, n + 1):
-            if is_prime(i) and n % i == 0:
-                if not canWin(n - i):
-                    results[n] = True
-                    return True
-
-        results[n] = False
-        return False
-
-    # Determine the winner for each round
-    maria_wins = 0
-    ben_wins = 0
-
-    for n in nums:
-        if canWin(n):
-            maria_wins += 1
-        else:
-            ben_wins += 1
-
-    # Determine the player who won the most rounds
-    if ben_wins > maria_wins:
-        return "Ben"
-    elif ben_wins < maria_wins:
-        return "Maria"
-    else:
+    if not nums or x < 1:
         return None
+    Maria = 0
+    ben = 0
+    # get primes up to max num
+    n = max(nums)
+    primes = set(range(2, n + 1))
+    for i in range(2, int(n**5) + 1):
+        primes -= set(range(i * i, n + 1, i))
+    for n in nums[:x]:
+        primes_count = sum([p <= n for p in primes])
+        ben += primes_count % 2 == 0
+        Maria += primes_count % 2 == 1
+    if Maria == ben:
+        return None
+    return 'Maria' if Maria > ben else 'Ben'
