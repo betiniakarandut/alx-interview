@@ -10,7 +10,20 @@ if (process.argv.length !== 3) {
 
 const movieId = process.argv[2];
 
-request(`${API_URL}/films/${movieId}/`, (err, _, body) => {
+const fetchCharacterName = async (url) => {
+  return new Promise((resolve, reject) => {
+    request(url, (error, _, characterBody) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+      const character = JSON.parse(characterBody);
+      resolve(character.name);
+    });
+  });
+};
+
+request(`${API_URL}/films/${movieId}/`, async (err, _, body) => {
   if (err) {
     console.error(err);
     return;
@@ -19,18 +32,10 @@ request(`${API_URL}/films/${movieId}/`, (err, _, body) => {
   const film = JSON.parse(body);
   const charactersURL = film.characters;
 
-  const printCharacterNames = (characterUrls) => {
-    characterUrls.forEach((url) => {
-      request(url, (error, _, characterBody) => {
-        if (error) {
-          console.error(error);
-          return;
-        }
-        const character = JSON.parse(characterBody);
-        console.log(character.name);
-      });
-    });
-  };
-
-  printCharacterNames(charactersURL);
+  try {
+    const characterNames = await Promise.all(charactersURL.map(fetchCharacterName));
+    characterNames.forEach((name) => console.log(name));
+  } catch (error) {
+    console.error(error);
+  }
 });
