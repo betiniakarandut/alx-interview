@@ -1,64 +1,63 @@
 #!/usr/bin/python3
-"""Module for 0-nqueens.py"""
+''' Module for N queens
+'''
 import sys
 
 
-def is_safe(board, row, col, n):
-    """Checks if there is any queen in the column
-    """
-    for i in range(row):
-        if board[i][col] == 1:
-            return False
+def print_board(board):
+    '''Prints the chess board
+    '''
+    result = []
+    for x in range(len(board)):
+        for y in range(len(board)):
+            if board[x][y] == 1:
+                result.append([x, y])
+    print(result)
 
-    # Check upper-left diagonal
-    for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
-        if board[i][j] == 1:
-            return False
 
-    # Check upper-right diagonal
-    for i, j in zip(range(row, -1, -1), range(col, n)):
-        if board[i][j] == 1:
+def is_safe(board, row, column):
+    '''Checks if it's safe to place a queen
+    '''
+    for x in range(column):
+        if board[row][x] == 1:
             return False
-
+    for x, y in zip(range(row, -1, -1),
+                    range(column, -1, -1)):
+        if board[x][y] == 1:
+            return False
+    for x, y in zip(range(row, len(board), 1),
+                    range(column, -1, -1)):
+        if board[x][y] == 1:
+            return False
     return True
 
 
-def solve_nqueens(board, row, n):
-    """Checks and print solution"""
-    if row == n:
-        for i in range(n):
-            print(" ".join(str(board[i][j]) for j in range(n)))
-        print()
-        return
-
-    for col in range(n):
-        if is_safe(board, row, col, n):
-            board[row][col] = 1
-            solve_nqueens(board, row + 1, n)
-            board[row][col] = 0
-
-
-def nqueens(n):
-    if not isinstance(n, int):
-        print("N must be a number")
-        sys.exit(1)
-    if n < 4:
-        print("N must be at least 4")
-        sys.exit(1)
-
-    board = [[0] * n for _ in range(n)]
-    solve_nqueens(board, 0, n)
+def solve(board, column):
+    '''Solves the N Queen problem using Backtracking
+    '''
+    if column == len(board):
+        print_board(board)
+        return True
+    res = False
+    for x in range(len(board)):
+        if is_safe(board, x, column):
+            board[x][column] = 1
+            res = solve(board, column + 1) or res
+            board[x][column] = 0
+    return res
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print("Usage: nqueens N")
+        print('Usage: nqueens N')
         sys.exit(1)
-
     try:
         N = int(sys.argv[1])
     except ValueError:
-        print("N must be a number")
+        print('N must be a number')
         sys.exit(1)
-
-    nqueens(N)
+    if N < 4:
+        print('N must be at least 4')
+        sys.exit(1)
+    board = [[0 for y in range(N)] for i in range(N)]
+    solve(board, 0)
