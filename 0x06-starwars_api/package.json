@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "<p><h1>0x06. Star Wars API :fire:</h1></p>",
   "main": "0-starwars_characters.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
